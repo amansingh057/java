@@ -1,19 +1,35 @@
+package QuickSort;
+
 import java.io.*;
 import java.util.*;
+
 public class Main {
-    
-  public static void partition(int[] arr, int pivot){
+
+  public static void quickSort(int[] arr, int lo, int hi) {
     //write your code here
-    int i=0 ,j=0;
-    while(i<arr.length){
-        if(arr[i]>pivot){
-            i++;
-        }else{
-            swap(arr,i,j);
-            i++;
-            j++;
-        }
+    if(lo>hi){
+        return;
     }
+    int pivot = arr[hi];
+    int pi = partition(arr,pivot,lo,hi);
+    quickSort(arr,lo,pi-1);
+    quickSort(arr,pi+1,hi);
+  }
+
+  public static int partition(int[] arr, int pivot, int lo, int hi) {
+    System.out.println("pivot -> " + pivot);
+    int i = lo, j = lo;
+    while (i <= hi) {
+      if (arr[i] <= pivot) {
+        swap(arr, i, j);
+        i++;
+        j++;
+      } else {
+        i++;
+      }
+    }
+    System.out.println("pivot index -> " + (j - 1));
+    return (j - 1);
   }
 
   // used for swapping ith and jth elements of array
@@ -38,8 +54,7 @@ public class Main {
     for (int i = 0; i < n; i++) {
       arr[i] = scn.nextInt();
     }
-    int pivot = scn.nextInt();
-    partition(arr,pivot);
+    quickSort(arr, 0, arr.length - 1);
     print(arr);
   }
 
